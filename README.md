@@ -1,7 +1,7 @@
 # boa - all snake, no venom
 [![Documentation](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/oncilla/boa?tab=overview)
 [![Go](https://img.shields.io/github/workflow/status/oncilla/boa/Go)](https://github.com/Oncilla/boa/actions?query=workflow%3AGo)
-[![Go Report Card](https://goreportcard.com/badge/github.com/oncilla/boa)](https://goreportcard.com/report/github.com/onilla/boa)
+[![Go Report Card](https://goreportcard.com/badge/github.com/oncilla/boa)](https://goreportcard.com/report/github.com/oncilla/boa)
 [![GitHub issues](https://img.shields.io/github/issues/oncilla/boa/help%20wanted.svg?label=help%20wanted&color=purple)](https://github.com/oncilla/boa/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
 [![GitHub issues](https://img.shields.io/github/issues/oncilla/boa/good%20first%20issue.svg?label=good%20first%20issue&color=purple)](https://github.com/oncilla/boa/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 [![Release](https://img.shields.io/github/release-pre/oncilla/boa.svg)](https://github.com/oncilla/boa/releases)
@@ -107,7 +107,7 @@ func newGreet(pather CommandPather) *cobra.Command {
 ```
 
 Boa suggests to use the `SilenceErrors` and `SilenceUsage`.
-For more information, see: github.com/spf13/cobra/issues/340#issuecomment-374617413
+For more information, see: https://github.com/spf13/cobra/issues/340#issuecomment-374617413
 
 You now need to register the command with its parent. For the sake of this
 example, it is simply the root command. Update `my-app.go` with:
@@ -116,8 +116,8 @@ example, it is simply the root command. Update `my-app.go` with:
     cmd.AddCommand(
         newCompletion(cmd),
         newGreet(cmd),
-		newVersion(cmd),
-	)
+        newVersion(cmd),
+    )
 
 ```
 
