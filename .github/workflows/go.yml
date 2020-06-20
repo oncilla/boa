@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    name: Build
+    name: build
     runs-on: ubuntu-latest
     steps:
 
@@ -37,11 +37,14 @@ jobs:
       run: go test -v .
   
   lint:
-    name: Lint
+    name: lint
     runs-on: ubuntu-latest
     steps:
 
+    - name: Checkout code into the directory
+      uses: actions/checkout@v2
+
     - name: Run golangci-lint
-      uses: golangci/golangci-lint-action@v1.2.1
+      uses: golangci/golangci-lint-action@v1
       with:
-        version: v1.2
+        version: v1.27
