@@ -58,7 +58,7 @@ func (c Command) Create(name string) error {
 	if err := file.Close(); err != nil {
 		return err
 	}
-	cmd := exec.Command("gofmt", "-w", file.Name())
+	cmd := exec.Command("gofmt", "-w", name)
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
 		return err
