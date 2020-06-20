@@ -29,7 +29,7 @@ func main() {
 	cmd := &cobra.Command{
 		Use:           "boa",
 		Short:         "A venom-free generator for cobra applications",
-		SilenceErrors: true,
+		SilenceErrors:    true,
 	}
 	cmd.AddCommand(
 		newAdd(cmd),
