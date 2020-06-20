@@ -36,6 +36,10 @@ jobs:
     - name: Test
       run: make test
 
+    - name: Golden files
+      run: make golden
+
+
   lint:
     name: lint
     runs-on: ubuntu-latest
