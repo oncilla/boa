@@ -4,6 +4,9 @@ build:
 test:
 	go test -v ./...
 
+golden:
+	go test -v ./... -update
+
 lint:
 	golangci-lint run
 
