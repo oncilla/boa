@@ -47,7 +47,6 @@ func ParseFlags(inputs []string) ([]Flag, []string, error) {
 	}
 	sort.Strings(unique)
 	return flags, unique, nil
-
 }
 
 // ParseFlag parses a single flag description.
