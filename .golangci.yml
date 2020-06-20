@@ -1,0 +1,15 @@
+linters:
+  enable:
+  - govet
+  - gofmt
+  - dogsled
+  - dupl
+  - gochecknoinits
+  - goconst
+  - stylecheck
+  - gocyclo
+  - gosec
+  - misspell
+  - scopelint
+  - unconvert
+  - whitespace
