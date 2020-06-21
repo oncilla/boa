@@ -1,5 +1,5 @@
 # boa - all snake, no venom
-[![Documentation](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/oncilla/boa?tab=overview)
+[![Documentation](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/mod/github.com/oncilla/boa)
 [![Go](https://img.shields.io/github/workflow/status/oncilla/boa/Go)](https://github.com/Oncilla/boa/actions?query=workflow%3AGo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/oncilla/boa)](https://goreportcard.com/report/github.com/oncilla/boa)
 [![GitHub issues](https://img.shields.io/github/issues/oncilla/boa/help%20wanted.svg?label=help%20wanted&color=purple)](https://github.com/oncilla/boa/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
