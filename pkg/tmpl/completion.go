@@ -17,7 +17,6 @@ package tmpl
 const Completion = `{{ if .Copyright.Author }}// Copyright {{.Copyright.Year}} {{ .Copyright.Author }}{{ end }}
 {{ if .License.Commented }}{{ .License.Commented }}{{ end }}
 
-
 package main
 
 import (
@@ -58,7 +57,6 @@ To permanently add bash autocompletion, run:
 			}
 		},
 	}
-
 	cmd.Flags().StringVar(&flags.shell, "shell", "bash", "Shell type (bash|zsh|fish)")
 	return cmd
 }
