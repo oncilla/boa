@@ -17,8 +17,6 @@ package tmpl
 const Root = `{{ if .Copyright.Author }}// Copyright {{.Copyright.Year}} {{ .Copyright.Author }}{{ end }}
 {{ if .License.Commented }}{{ .License.Commented }}{{ end }}
 
-
-
 package main
 
 import (
@@ -44,7 +42,7 @@ func main() {
 		newVersion(cmd),
 	)
 	if err := cmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %s", err)
+		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(1)
 	}
 }
