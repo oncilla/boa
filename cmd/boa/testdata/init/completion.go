@@ -52,7 +52,6 @@ To permanently add bash autocompletion, run:
 			}
 		},
 	}
-
 	cmd.Flags().StringVar(&flags.shell, "shell", "bash", "Shell type (bash|zsh|fish)")
 	return cmd
 }
