@@ -16,6 +16,18 @@ A venom-free generator for cobra applications.
 go get -u github.com/oncilla/boa/cmd/boa
 ```
 
+## Docker
+
+If you prefer using docker instead:
+
+```txt
+WORKDIR=$(pwd)/path/to/application
+docker run \
+    -v $WORKDIR/:/workdir \
+    --user "$(id -u):$(id -g)" \
+    docker.pkg.github.com/oncilla/boa/boa:latest
+```
+
 ## Getting started
 
 `boa` proposes a different layout than what `cobra` proposes as a [typical
