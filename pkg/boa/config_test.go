@@ -21,11 +21,13 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/mitchellh/mapstructure"
+	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/oncilla/boa/pkg/boa"
+	"github.com/oncilla/boa/pkg/boa/flag"
 	"github.com/oncilla/boa/pkg/boa/mock_boa"
 )
 
@@ -34,7 +36,7 @@ type Config struct {
 		User     string `mapstructure:"user"`
 		Password string `mapstructure:"password"`
 	} `mapstructure:"db"`
-	Addr  *net.TCPAddr `mapstructure:"addr"`
+	Addr  *flag.TCPAddr `mapstructure:"addr"`
 	Token `mapstructure:",squash"`
 }
 
@@ -64,13 +66,13 @@ func TestSetDefault(t *testing.T) {
 	var config Config
 	config.DB.User = "oncilla"
 	config.DB.Password = "password"
-	config.Addr = &net.TCPAddr{IP: net.ParseIP("127.0.0.1"), Port: 8080}
+	config.Addr = &flag.TCPAddr{IP: net.ParseIP("127.0.0.1"), Port: 8080}
 	config.Token.Token = "token"
 
 	r := mock_boa.NewMockConfigRegistry(ctrl)
 	r.EXPECT().SetDefault("db.user", "oncilla")
 	r.EXPECT().SetDefault("db.password", "password")
-	r.EXPECT().SetDefault("addr", &net.TCPAddr{IP: net.ParseIP("127.0.0.1"), Port: 8080})
+	r.EXPECT().SetDefault("addr", &flag.TCPAddr{IP: net.ParseIP("127.0.0.1"), Port: 8080})
 	r.EXPECT().SetDefault("token", "token")
 
 	err := boa.SetDefaults(r, &config)
@@ -102,4 +104,29 @@ func TestViperBindEnv(t *testing.T) {
 	assert.Equal(t, "password", config.DB.Password)
 	assert.Equal(t, "127.0.0.1:8080", config.Addr.String())
 	assert.Equal(t, "token", config.Token.Token)
+}
+
+func TestAddFlags(t *testing.T) {
+	var config Config
+	config.DB.User = "oncilla"
+	config.DB.Password = "password"
+	config.Addr = &flag.TCPAddr{IP: net.ParseIP("127.0.0.1"), Port: 8080}
+	config.Token.Token = "token"
+
+	s := pflag.NewFlagSet("", pflag.ContinueOnError)
+	err := boa.AddFlags(s, &config)
+	require.NoError(t, err)
+
+	user, err := s.GetString("db.user")
+	assert.NoError(t, err)
+	assert.Equal(t, "oncilla", user)
+	password, err := s.GetString("db.password")
+	assert.NoError(t, err)
+	assert.Equal(t, "password", password)
+	addr := s.Lookup("addr")
+	assert.NotNil(t, addr)
+	assert.Equal(t, "127.0.0.1:8080", addr.Value.String())
+	token, err := s.GetString("token")
+	assert.NoError(t, err)
+	assert.Equal(t, "token", token)
 }

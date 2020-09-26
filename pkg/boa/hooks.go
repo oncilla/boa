@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/mitchellh/mapstructure"
+	"github.com/oncilla/boa/pkg/boa/flag"
 )
 
 // DefaultDecodeHooks returns a list of useful decoding hooks.
@@ -41,10 +42,9 @@ func StringToTCPAddrHookFunc() mapstructure.DecodeHookFunc {
 		if f.Kind() != reflect.String {
 			return data, nil
 		}
-		if t != reflect.TypeOf(net.TCPAddr{}) {
+		if t != reflect.TypeOf(net.TCPAddr{}) && t != reflect.TypeOf(flag.TCPAddr{}) {
 			return data, nil
 		}
-
 		addr, err := net.ResolveTCPAddr("tcp", data.(string))
 		if err != nil {
 			return nil, err
@@ -63,10 +63,9 @@ func StringToUDPAddrHookFunc() mapstructure.DecodeHookFunc {
 		if f.Kind() != reflect.String {
 			return data, nil
 		}
-		if t != reflect.TypeOf(net.UDPAddr{}) {
+		if t != reflect.TypeOf(net.UDPAddr{}) && t != reflect.TypeOf(flag.UDPAddr{}) {
 			return data, nil
 		}
-
 		addr, err := net.ResolveUDPAddr("udp", data.(string))
 		if err != nil {
 			return nil, err

@@ -25,9 +25,22 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/oncilla/boa/pkg/boa"
+	"github.com/oncilla/boa/pkg/boa/flag"
 )
 
+func defaultConfig() *Config {
+	return &Config{
+		DB: DB{
+			User:     "user",
+			Password: "password",
+		},
+		Addr: &flag.TCPAddr{IP: net.ParseIP("127.0.0.1"), Port: 8080},
+	}
+}
+
 func main() {
+	v := viper.New()
+
 	cmd := &cobra.Command{
 		Use:   "config <config-file>",
 		Short: "A sample application with config parsing",
@@ -35,9 +48,10 @@ func main() {
 
 This application loads the configuration based on the following precedence:
 
-1. Environment variable
-2. Configuration file
-3. Default values
+1. Command line flag
+2. Environment variable
+3. Configuration file
+4. Default value
 
 The default configuration is:
 
@@ -54,18 +68,10 @@ SAMPLE_DB_USER=secure
 `,
 		SilenceErrors: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			v := viper.New()
+			cfg := defaultConfig()
 			v.SetEnvPrefix("sample")
 			v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-
-			// Define the configuration struct.
-			cfg := &Config{
-				DB: DB{
-					User:     "user",
-					Password: "password",
-				},
-				Addr: &net.TCPAddr{IP: net.ParseIP("127.0.0.1"), Port: 8080},
-			}
+			v.BindPFlags(cmd.Flags())
 
 			// Set the default values for the configuration.
 			if err := boa.SetDefaults(v, cfg); err != nil {
@@ -102,6 +108,10 @@ SAMPLE_DB_USER=secure
 			return enc.Encode(out)
 		},
 	}
+	if err := boa.AddFlags(cmd.Flags(), defaultConfig()); err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+		os.Exit(1)
+	}
 	if err := cmd.Execute(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
 		os.Exit(1)
@@ -109,8 +119,8 @@ SAMPLE_DB_USER=secure
 }
 
 type Config struct {
-	DB   DB           `mapstructure:"db"`
-	Addr *net.TCPAddr `mapstructure:"addr"`
+	DB   DB            `mapstructure:"db"`
+	Addr *flag.TCPAddr `mapstructure:"addr"`
 }
 
 type DB struct {
