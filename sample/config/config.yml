@@ -1,0 +1,4 @@
+db:
+    user: postgres
+    password: secure
+addr: "127.0.0.1:3440"
